@@ -410,10 +410,11 @@ dependencies = [
 
 [[package]]
 name = "feature_flags"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "aws-config",
  "aws-sdk-lambda",
+ "bytes-utils",
  "lambda_runtime",
  "serde",
  "serde_json",
