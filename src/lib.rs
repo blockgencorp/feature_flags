@@ -4,14 +4,14 @@ use serde::{Deserialize, Serialize};
 
 
 #[derive(Serialize, Deserialize)]
-struct Request {
-    feature: String,
+pub struct Request {
+    pub feature: String,
 }
 
 #[derive(Serialize, Deserialize)]
-struct Response {
-    feature: String,
-    flag: bool,
+pub struct Response {
+    pub feature: String,
+    pub flag: bool,
 }
 
 pub fn feature_flag_sync(feature: &str) -> bool {

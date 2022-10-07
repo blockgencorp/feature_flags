@@ -1,18 +1,6 @@
 use lambda_runtime::{run, service_fn, Error, LambdaEvent};
 use std::collections::HashSet;
-
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize)]
-struct Request {
-    feature: String,
-}
-
-#[derive(Serialize, Deserialize)]
-struct Response {
-    feature: String,
-    flag: bool,
-}
+use feature_flags::{Request, Response};
 
 async fn function_handler(event: LambdaEvent<Request>) -> Result<Response, Error> {
     let feature = event.payload.feature;
