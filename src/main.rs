@@ -1,19 +1,18 @@
+use feature_flags::{Request, Response};
 use lambda_runtime::{run, service_fn, Error, LambdaEvent};
 use std::collections::HashSet;
-use feature_flags::{Request, Response};
 
 async fn function_handler(event: LambdaEvent<Request>) -> Result<Response, Error> {
     let feature = event.payload.feature;
-    let flags = HashSet::from([
-        "POST_RATE_ADJUSTMENT_ACTION".to_string(),
-        "POST_PRICE_RULE_ACTION".to_string(),
-        // "POST_PRICE_RULE_ACTION".to_string(),
-    ]);
+    let vars: Vec<(String, String)> = dotenv::vars().collect();
+    let mut flags = HashSet::new();
+    for (key, flag) in vars {
+        if let Ok(true) = flag.parse::<bool>() {
+            flags.insert(key);
+        }
+    }
     let flag = flags.contains(&feature);
-    let resp = Response {
-        feature,
-        flag,
-    };
+    let resp = Response { feature, flag };
     Ok(resp)
 }
 
